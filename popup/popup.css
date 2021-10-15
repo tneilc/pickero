@@ -1,4 +1,46 @@
 body {
 
-    background-color: #22272d;
+    background-color: #33363b;
+    margin: 20px;
+    overflow-x: hidden; 
+}
+
+h5 {
+    color: white;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+
+
+input {
+    border-radius: 4px;
+    font-family: monospace;
+    height: 20px;
+    
+}
+
+
+
+#pick {
+    background-color: #5865f2;
+    border: none;
+    color: white;
+    margin-top: 12px;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 15px;
+    font-family: sans-serif;
+    padding: 6px 18px;
+}
+
+
+#fill {
+    display: inline-block
+}
+
+#color {
+    border-radius: 5px;
+    width: 100%;
+    background-color: transparent;
 }
