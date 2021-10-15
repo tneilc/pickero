@@ -16,5 +16,13 @@
     "scripts": ["./background/background.js"],
     "persistent": false
   },
-  "permissions": ["background", "tabs", "activeTab"]
+  "permissions": [
+    "background",
+    "tabs",
+    "<all_urls>",
+    "activeTab",
+    "notifications",
+    "http://*/",
+    "https://*/"
+  ]
 }
