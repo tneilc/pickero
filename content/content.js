@@ -37,8 +37,8 @@ function clickEventHandler(event) {
       canvas.width = image.naturalWidth;
       context.drawImage(image, 0, 0);
 
-      let x = event.clientX;
-      let y = event.clientY;
+      let x = event.clientX * window.devicePixelRatio;
+      let y = event.clientY * window.devicePixelRatio;
 
       let colors = context.getImageData(x, y, 1, 1).data;
       var hexValue = rgbToHex(colors[0], colors[1], colors[2]);
@@ -69,8 +69,8 @@ let mouseMoveCanvas = document.createElement("canvas");
 let mouseMoveContext = mouseMoveCanvas.getContext("2d");
 
 function mouseMoveHandler(e) {
-  x = e.offsetX;
-  y = e.offsetY;
+  x = e.offsetX * window.devicePixelRatio;
+  y = e.offsetY * window.devicePixelRatio;
   let colors = mouseMoveContext.getImageData(x, y, 1, 1).data;
   var hexValue = rgbToHex(colors[0], colors[1], colors[2]);
 
