@@ -1,3 +1,13 @@
+function endEyeDrop() {
+  document.removeEventListener("click", clickEventHandler, false);
+
+  // Enable pointer events back
+  var children = document.body.children;
+  for (let i = 0; i < children.length; i++) {
+    children[i].style.pointerEvents = "auto";
+  }
+}
+
 function clickEventHandler(event) {
   let canvas = document.createElement("canvas");
   let context = canvas.getContext("2d");
@@ -17,22 +27,18 @@ function clickEventHandler(event) {
       let y = event.clientY * window.devicePixelRatio;
 
       let colors = context.getImageData(x, y, 1, 1).data;
+      var hexValue = rgbToHex(colors[0], colors[1], colors[2]);
 
       console.log([colors[0], colors[1], colors[2]]);
       console.log(rgbToHex(colors[0], colors[1], colors[2]));
 
       chrome.runtime.sendMessage({
         message: "change_color",
-        data: rgbToHex(colors[0], colors[1], colors[2]),
+        data: hexValue,
       });
     };
   });
-
-  document.removeEventListener("click", clickEventHandler, false);
-  var children = document.body.children;
-  for (let i = 0; i < children.length; i++) {
-    children[i].style.pointerEvents = "auto";
-  }
+  endEyeDrop();
 }
 
 function rgbToHex(r, g, b) {
@@ -41,6 +47,7 @@ function rgbToHex(r, g, b) {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message == "pick") {
+    //Disable pointer events to prevent clicking a button
     var children = document.body.children;
     for (let i = 0; i < children.length; i++) {
       if (children[i].id != "pickero") {

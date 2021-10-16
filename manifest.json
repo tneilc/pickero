@@ -21,6 +21,7 @@
     "tabs",
     "<all_urls>",
     "activeTab",
+    "storage",
     "notifications",
     "http://*/",
     "https://*/"

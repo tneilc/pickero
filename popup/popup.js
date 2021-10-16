@@ -14,10 +14,26 @@ var colorPicker = new iro.ColorPicker("#picker", {
   ],
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  restoreSavedColors();
+});
+
+function restoreSavedColors() {
+  console.log("okkk");
+  chrome.storage.local.get({ colors: [] }, function (data) {
+    colors = data.colors;
+    console.log(colors)
+    let history = document.getElementsByClassName("history");
+    for (let index = 0; index < history.length; index++) {
+      history[index].style.backgroundColor = colors[index];
+    }
+  });
+}
+
 var hex = document.getElementById("hex");
 var rgb = document.getElementById("rgb");
 var selectedColor = document.getElementById("color");
-var button = document.getElementById("pick")
+var button = document.getElementById("pick");
 
 hex.addEventListener("click", function (event) {
   hex.select();
@@ -53,15 +69,12 @@ rgb.addEventListener("change", function (event) {
   }
 });
 
-
-button.addEventListener("click",function(){
-  console.log("done")
+button.addEventListener("click", function () {
+  console.log("done");
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id,{message:"pick"})
+    chrome.tabs.sendMessage(tabs[0].id, { message: "pick" });
   });
-  
-})
-
+});
 
 colorPicker.on(["color:init", "color:change"], function (color) {
   hex.value = color.hexString;
@@ -69,12 +82,34 @@ colorPicker.on(["color:init", "color:change"], function (color) {
   selectedColor.style.backgroundColor = color.hexString;
 });
 
+function saveColor(color) {
+  chrome.storage.local.get({ colors: [] }, function (data) {
+    if (colors.length == 10) {
+      colors = [];
+      colors.push(color);
+    } else {
+      colors.push(color);
+    }
 
+    chrome.storage.local.set({ colors }, function () {
+      if (typeof callback === "function") {
+        //If there was no callback provided, don't try to call it.
+        callback();
+      }
+    });
 
+    let history = document.getElementsByClassName("history");
+    for (let index = 0; index < history.length; index++) {
+      history[index].style.backgroundColor = colors[index];
+    }
+
+  });
+}
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message == "change_color") {
     colorPicker.color.hexString = request.data;
+    saveColor(request.data)
   }
   return true;
 });
