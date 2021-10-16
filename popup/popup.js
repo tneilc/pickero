@@ -22,7 +22,7 @@ function restoreSavedColors() {
   console.log("okkk");
   chrome.storage.local.get({ colors: [] }, function (data) {
     colors = data.colors;
-    console.log(colors)
+    console.log(colors);
     let history = document.getElementsByClassName("history");
     for (let index = 0; index < history.length; index++) {
       history[index].style.backgroundColor = colors[index];
@@ -34,6 +34,15 @@ var hex = document.getElementById("hex");
 var rgb = document.getElementById("rgb");
 var selectedColor = document.getElementById("color");
 var button = document.getElementById("pick");
+let historyButtons = document.getElementsByClassName("history");
+
+for (let index = 0; index < historyButtons.length; index++) {
+  const element = historyButtons[index];
+  element.addEventListener("click", function (event) {
+    console.log(element.style.backgroundColor);
+    colorPicker.color.rgbString = element.style.backgroundColor;
+  });
+}
 
 hex.addEventListener("click", function (event) {
   hex.select();
@@ -102,14 +111,13 @@ function saveColor(color) {
     for (let index = 0; index < history.length; index++) {
       history[index].style.backgroundColor = colors[index];
     }
-
   });
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message == "change_color") {
     colorPicker.color.hexString = request.data;
-    saveColor(request.data)
+    saveColor(request.data);
   }
   return true;
 });
