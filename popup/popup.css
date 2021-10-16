@@ -1,64 +1,59 @@
 body {
-    background-color: #33363b;
-    margin: 20px;
-    margin-right: 30px;
-    overflow-x: hidden; 
+  background-color: #33363b;
+  margin: 20px;
+  margin-right: 30px;
+  overflow-x: hidden;
 }
 
 h5 {
-    color: white;
-    margin-bottom: 0;
-    margin-top: 10px;
+  color: white;
+  margin-bottom: 0;
+  margin-top: 10px;
 }
-
-
 
 input {
-    border-radius: 4px;
-    font-family: monospace;
-    height: 20px;
-    
+  border-radius: 4px;
+  font-family: monospace;
+  height: 20px;
+  background-color: transparent;
+  border: none;
+  color: white;
 }
-
-
 
 #pick {
-    background-color: #5865f2;
-    color: white;
-    margin-top: 12px;
-    width: 100%;
-    border-radius: 5px;
-    font-size: 15px;
-    font-family: sans-serif;
-    padding: 6px 18px;
+  background-color: #5865f2;
+  color: white;
+  margin-top: 12px;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 15px;
+  font-family: sans-serif;
+  padding: 6px 18px;
 }
 
-
 #fill {
-    display: inline-block
+  display: inline-block;
 }
 
 #color {
-    border-radius: 5px;
-    width: 100%;
-    background-color: transparent;
+  border-radius: 5px;
+  width: 100%;
+  background-color: transparent;
 }
 
 #vertical {
-    margin-top: 15px;
-    height: 100%;
-    right: 0;
-    position: fixed;
-    top: 0;	
-    
+  margin-top: 15px;
+  height: 100%;
+  right: 0;
+  position: fixed;
+  top: 0;
 }
 
 .history {
-    height: 15px;
-    display: block;
-    margin-top: 5px;
-    
-    margin-right: 6px;
-
-    
+  height: 15px;
+  display: block;
+  margin-top: 5px;
+  background-color: none;
+  margin-right: 6px;
+  border-radius: 10px;
 }

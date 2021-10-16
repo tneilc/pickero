@@ -39,8 +39,11 @@ let historyButtons = document.getElementsByClassName("history");
 for (let index = 0; index < historyButtons.length; index++) {
   const element = historyButtons[index];
   element.addEventListener("click", function (event) {
-    console.log(element.style.backgroundColor);
-    colorPicker.color.rgbString = element.style.backgroundColor;
+    try {
+      colorPicker.color.rgbString = element.style.backgroundColor;
+    } catch (error) {
+      console.log(error);
+    }
   });
 }
 
@@ -81,6 +84,7 @@ rgb.addEventListener("change", function (event) {
 button.addEventListener("click", function () {
   console.log("done");
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+    window.close()
     chrome.tabs.sendMessage(tabs[0].id, { message: "pick" });
   });
 });
@@ -91,33 +95,6 @@ colorPicker.on(["color:init", "color:change"], function (color) {
   selectedColor.style.backgroundColor = color.hexString;
 });
 
-function saveColor(color) {
-  chrome.storage.local.get({ colors: [] }, function (data) {
-    if (colors.length == 10) {
-      colors = [];
-      colors.push(color);
-    } else {
-      colors.push(color);
-    }
 
-    chrome.storage.local.set({ colors }, function () {
-      if (typeof callback === "function") {
-        //If there was no callback provided, don't try to call it.
-        callback();
-      }
-    });
 
-    let history = document.getElementsByClassName("history");
-    for (let index = 0; index < history.length; index++) {
-      history[index].style.backgroundColor = colors[index];
-    }
-  });
-}
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.message == "change_color") {
-    colorPicker.color.hexString = request.data;
-    saveColor(request.data);
-  }
-  return true;
-});
