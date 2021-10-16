@@ -1,7 +1,3 @@
-
-document.addEventListener("click", clickEventHandler, false);
-
-var text = document.getElementById("popo");
 function clickEventHandler(event) {
   let canvas = document.createElement("canvas");
   let context = canvas.getContext("2d");
@@ -31,8 +27,28 @@ function clickEventHandler(event) {
       });
     };
   });
+
+  document.removeEventListener("click", clickEventHandler, false);
+  var children = document.body.children;
+  for (let i = 0; i < children.length; i++) {
+    children[i].style.pointerEvents = "auto";
+  }
 }
 
 function rgbToHex(r, g, b) {
   return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.message == "pick") {
+    var children = document.body.children;
+    for (let i = 0; i < children.length; i++) {
+      if (children[i].id != "pickero") {
+        children[i].style.pointerEvents = "none";
+      }
+    }
+
+    document.addEventListener("click", clickEventHandler, false);
+  }
+  return true;
+});
