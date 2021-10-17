@@ -65,30 +65,31 @@ function rgbToHex(r, g, b) {
   return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
-let mouseMoveCanvas = document.createElement("canvas");
-let mouseMoveContext = mouseMoveCanvas.getContext("2d");
+// let mouseMoveCanvas = document.createElement("canvas");
+// let mouseMoveContext = mouseMoveCanvas.getContext("2d");
 
 function mouseMoveHandler(e) {
   x = e.offsetX * window.devicePixelRatio;
   y = e.offsetY * window.devicePixelRatio;
-  let colors = mouseMoveContext.getImageData(x, y, 1, 1).data;
-  var hexValue = rgbToHex(colors[0], colors[1], colors[2]);
+  // let colors = mouseMoveContext.getImageData(x, y, 1, 1).data;
+  // var hexValue = rgbToHex(colors[0], colors[1], colors[2]);
 
-  document.getElementById("currentColor").innerText = hexValue;
+  document.getElementById("currentColor").innerText = Math.round(x)+" x "+Math.round(y);
 }
 
 function setupMouseMovement() {
-  chrome.runtime.sendMessage({ message: "screen" }, (ss) => {
-    let image = new Image();
-    image.src = ss.src;
-    image.onload = function () {
-      mouseMoveCanvas.height = image.naturalHeight;
-      mouseMoveCanvas.width = image.naturalWidth;
-      mouseMoveContext.drawImage(image, 0, 0);
+  document.addEventListener("mousemove", mouseMoveHandler);
+  // chrome.runtime.sendMessage({ message: "screen" }, (ss) => {
+  //   let image = new Image();
+  //   image.src = ss.src;
+  //   image.onload = function () {
+  //     mouseMoveCanvas.height = image.naturalHeight;
+  //     mouseMoveCanvas.width = image.naturalWidth;
+  //     mouseMoveContext.drawImage(image, 0, 0);
 
-      document.addEventListener("mousemove", mouseMoveHandler);
-    };
-  });
+      
+  //   };
+  // });
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
