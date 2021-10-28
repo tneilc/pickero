@@ -8,3 +8,5 @@ Pickero is currently available in Chrome Web Store, you can check it out and giv
 
 # Creds
 Big shout out to [James](https://github.com/jaames) for creating this awesome library [iro.js](https://github.com/jaames/iro.js).
+
+![ScreenShot](/assets/ScreenShot.png)
